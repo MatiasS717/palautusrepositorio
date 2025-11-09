@@ -1,5 +1,7 @@
 import requests
 from player import Player
+from rich.console import Console
+from rich.table import Table
 
 class PlayerReader:
 
@@ -32,14 +34,35 @@ class PlayerStats:
                 top_scorers.append(player)
         return top_scorers
 
+class TableCreator:
+
+    def __init__(self, stats, nationality, season):
+        self.players = stats.top_scorers_by_nationality(nationality)
+        self.season = season
+        self.nationality = nationality
+
+    def return_table(self):
+        table = Table(title=f"Season {self.season} players from {self.nationality}")
+
+        table.add_column("Player", style="cyan", no_wrap=True)
+        table.add_column("Teams", style="magenta")
+        table.add_column("Goals", style="green")
+        table.add_column("Assists", style="green")
+        table.add_column("Points", style="green")
+
+        for player in self.players:
+            table.add_row(player.name, player.team, str(player.goals), str(player.assists), str(player.points))
+
+        console = Console()
+        console.print(table)
+
+
 def main():
     url = "https://studies.cs.helsinki.fi/nhlstats/2024-25/players"
     reader = PlayerReader(url)
     stats = PlayerStats(reader)
-    players = stats.top_scorers_by_nationality("FIN")
+    TableCreator(stats, "FIN", "2024-2025").return_table()
 
-    for player in players:
-        print(player)
 
 main()
 
