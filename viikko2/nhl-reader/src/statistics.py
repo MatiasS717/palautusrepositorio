@@ -16,7 +16,9 @@ def main():
 
     print("Suomalaiset pelaajat:")
 
-    for player in players:
+    järjestetty = sorted(players, key=lambda p: p.goals + p.assists, reverse=True)
+
+    for player in järjestetty:
         if player.nationality == "FIN":
             print(player)
 
