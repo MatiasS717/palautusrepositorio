@@ -1,13 +1,13 @@
 import requests
-from player import Player
 from rich.console import Console
 from rich.table import Table
+from player import Player
 
 class PlayerReader:
 
     def __init__(self, url):
         self.url = url
-    
+
     def get_players(self):
         url = "https://studies.cs.helsinki.fi/nhlstats/2024-25/players"
         response = requests.get(url).json()
@@ -25,11 +25,11 @@ class PlayerStats:
         self.players = reader.get_players()
 
     def top_scorers_by_nationality(self, nationality):
-        järjestetty = sorted(self.players, key=lambda p: p.goals + p.assists, reverse=True)
+        jarjestetty = sorted(self.players, key=lambda p: p.goals + p.assists, reverse=True)
 
         top_scorers = []
 
-        for player in järjestetty:
+        for player in jarjestetty:
             if player.nationality == nationality:
                 top_scorers.append(player)
         return top_scorers
@@ -51,7 +51,8 @@ class TableCreator:
         table.add_column("Points", style="green")
 
         for player in self.players:
-            table.add_row(player.name, player.team, str(player.goals), str(player.assists), str(player.points))
+            table.add_row(player.name, player.team, str(player.goals),
+                          str(player.assists), str(player.points))
 
         console = Console()
         console.print(table)
@@ -63,6 +64,4 @@ def main():
     stats = PlayerStats(reader)
     TableCreator(stats, "FIN", "2024-2025").return_table()
 
-
 main()
-
