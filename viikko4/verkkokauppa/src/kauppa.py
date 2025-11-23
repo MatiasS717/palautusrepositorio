@@ -10,6 +10,7 @@ class Kauppa:
 
     def aloita_asiointi(self):
         self._ostoskori = Ostoskori()
+        self._ostoskori._tuotteet = []
 
     def poista_korista(self, id):
         tuote = self._varasto.hae_tuote(id)
