@@ -20,6 +20,7 @@ class Kayttoliittyma:
             Komento.SUMMA: self.Summa(),
             Komento.EROTUS: self.Erotus(),
             Komento.NOLLAUS: self.Nollaus(),
+            Komento.KUMOA: self.Kumoa(),
         }
 
     def kaynnista(self):
@@ -70,6 +71,9 @@ class Kayttoliittyma:
         
     def Nollaus(self):
         return lambda: self._sovelluslogiikka.nollaa()
+    
+    def Kumoa(self):
+        return lambda: self._sovelluslogiikka.aseta_arvo(self._sovelluslogiikka._edellinen_arvo)
 
     def _lue_syote(self):
         arvo = self._syote_kentta.get()
